@@ -71,9 +71,9 @@ If you find our project useful in your research, please cite it in your publicat
 
 ```bibtex
 @inproceedings{
-    anonymous2025an,
+    wong2025end,
     title={An End-to-End Model For Logits Based Large Language Models Watermarking},
-    author={Anonymous},
+    author={Wong, Kahim and Zhou, Jicheng and Zhou, Jiantao and Si, Yain-Whar},
     booktitle={Forty-second International Conference on Machine Learning},
     year={2025},
     url={https://openreview.net/forum?id=9sNiCqi2RD}
