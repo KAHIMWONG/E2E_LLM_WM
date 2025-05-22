@@ -37,10 +37,10 @@ def test(llm_name='opt-1.3b', assess_type='det', assess_name='no_attack', ds_len
         Test the LLM with given assessment type and assessment name.
 
         Parameters:
-            llm_name: The name of the LLM. 'opt-1.3b', 'Llama-2-7b-hf', 'Llama-2-7b-chat-hf'.
+            llm_name: The name of the LLM. 'opt-1.3b', 'Llama-2-7b-hf'
             assess_type: The type of assessment, 'det' for detection, 'qlt' for quality.
             assess_name: The name of the assessment.
-                For detection, 'no_attack', 'delete', 'substitute', 'context_substitute', 'paraphrase_dipper'.
+                For detection, 'no_attack', 'context_substitute', 'paraphrase_dipper'.
                 For quality, 'PPL', 'Log Diversity', 'BLEU', 'pass@1'.
             ds_len: The length of the dataset. If -1, the whole dataset is used.
     """

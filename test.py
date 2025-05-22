@@ -57,7 +57,7 @@ def test(llm_name='opt-1.3b', assess_type='det', assess_name='no_attack', ds_len
                 dataset=ds,
                 text_editor_list=[],
                 show_progress=True,
-                text_source_mode='generated',
+                text_source_mode='natural',
                 return_type=DetectionPipelineReturnType.SCORES).evaluate(wm_scheme)
             print_det_result(nwm_result, wm_result)
             del attack
@@ -108,7 +108,7 @@ def get_trans_cfg(assess_name, assess_type, llm_name):
             do_sample=True,
             min_length=230,
             no_repeat_ngram_size=4,
-            temperature=1.,
+            temperature=0.6,
         )
     return trans_cfg
 
