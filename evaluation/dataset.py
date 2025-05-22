@@ -67,7 +67,7 @@ class C4Dataset(BaseDataset):
         with open(self.data_source, 'r') as f:
             lines = f.readlines()
         lines = lines[:self.sample_n]
-        for line in lines[:200]:
+        for line in lines:
             item = json.loads(line)
             self.prompts.append(item['prompt'])
             self.natural_texts.append(item['natural_text'])
