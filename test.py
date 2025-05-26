@@ -1,7 +1,6 @@
 import os
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-os.environ["OPENAI_API_KEY"] = ''
 import argparse
 import torch
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoModelForCausalLM
@@ -117,8 +116,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--llm_name', type=str, default='Llama-2-7b-hf')
     parser.add_argument('--assess_type', type=str, default='det')
-    parser.add_argument('--assess_name', type=str, default='no_attack')
-    parser.add_argument('--ds_len', type=int, default=1000)
+    parser.add_argument('--assess_name', type=str, default='paraphrase_dipper')
+    parser.add_argument('--ds_len', type=int, default=100)
     args = parser.parse_args()
 
     test(llm_name=args.llm_name,

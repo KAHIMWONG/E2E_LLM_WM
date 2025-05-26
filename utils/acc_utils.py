@@ -42,7 +42,7 @@ def get_attack(attack_name):
         return DipperParaphraser(
             tokenizer=T5Tokenizer.from_pretrained('google/t5-v1_1-xxl'),
             model=T5ForConditionalGeneration.from_pretrained(
-                '/home/jesonwong47/data/WLLM/SIR/dipper/para-paraphrase-ctx-t5-xxl',
+                'your_dipper_dir/para-paraphrase-ctx-t5-xxl',  # TODO:
                 torch_dtype=torch.float16).cuda().eval(),
             lex_diversity=60, order_diversity=0, sent_interval=1, max_new_tokens=100,
             do_sample=True, top_p=0.75, top_k=None)

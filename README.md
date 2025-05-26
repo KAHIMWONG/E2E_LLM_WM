@@ -11,7 +11,8 @@ The source code of the paper "An End-to-End Model for Logits Based Large Languag
 
 ## Training
 
-The training code will be available soon.
+The training script is in directory ```train/```. Run ```train/main.py``` to train our model. Before training, please config the training parameters in the ```train/config.py```.
+
 
 ## Evaluation
 
