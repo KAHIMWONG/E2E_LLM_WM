@@ -7,25 +7,24 @@
  
 ## Description   
 
-The source code of the paper "An End-to-End Model for Logits Based Large Language Models Watermarking". The rise of LLMs has increased concerns over source tracing and copyright protection for AIGC, highlighting the need for advanced detection technologies. Passive detection methods usually face high false positives, while active watermarking techniques using logits or sampling manipulation offer more effective protection. Existing LLM watermarking methods, though effective on unaltered content, suffer significant performance drops when the text is modified and could introduce biases that degrade LLM performance in downstream tasks. These methods fail to achieve an optimal tradeoff between text quality and robustness, particularly due to the lack of end-to-end optimization of the encoder and decoder. In this paper, we introduce a novel end-to-end logits perturbation method for watermarking LLM-generated text. By jointly optimization, our approach achieves a better balance between quality and robustness. To address non-differentiable operations in the end-to-end training pipeline, we introduce an online prompting technique that leverages the on-the-fly LLM as a differentiable surrogate. Our method achieves superior robustness, outperforming distortion-free methods by 37–39\% under paraphrasing and 17.2\% on average, while maintaining text quality on par with these distortion-free methods in terms of text perplexity and downstream tasks. Our method can be easily generalized to different LLMs.    
+The official source code of the paper "An End-to-End Model for Logits Based Large Language Models Watermarking". 
 
-## Training
+## Abstract   
 
-The training script is in directory ```train/```. Run ```train/main.py``` to train our model. Before training, please config the training parameters in the ```train/config.py```.
+The rise of LLMs has increased concerns over source tracing and copyright protection for AIGC, highlighting the need for advanced detection technologies. Passive detection methods usually face high false positives, while active watermarking techniques using logits or sampling manipulation offer more effective protection. Existing LLM watermarking methods, though effective on unaltered content, suffer significant performance drops when the text is modified and could introduce biases that degrade LLM performance in downstream tasks. These methods fail to achieve an optimal tradeoff between text quality and robustness, particularly due to the lack of end-to-end optimization of the encoder and decoder. In this paper, we introduce a novel end-to-end logits perturbation method for watermarking LLM-generated text. By jointly optimization, our approach achieves a better balance between quality and robustness. To address non-differentiable operations in the end-to-end training pipeline, we introduce an online prompting technique that leverages the on-the-fly LLM as a differentiable surrogate. Our method achieves superior robustness, outperforming distortion-free methods by 37–39\% under paraphrasing and 17.2\% on average, while maintaining text quality on par with these distortion-free methods in terms of text perplexity and downstream tasks. Our method can be easily generalized to different LLMs.    
 
+## Environment Setup
 
-## Evaluation
-
-First, install dependencies: python 3.9, pytorch 2.1, and other packages by
+Install dependencies: python 3.9, pytorch 2.1, and other packages by
 ```bash
 pip install -r requirements.txt
 ```   
 
-Run the ```test.py``` for testing our model.
+## Training
 
-```bash
-python test.py
-```
+The training script is in directory ```train/```, the remain scripts outside this directory are used for evaluation. Run ```train/main.py``` to train our model. Before training, please config the training parameters in the ```train/config.py```.
+
+## Evaluation
 
 The ```test.py``` run the following function and the arguments are explained:
 
