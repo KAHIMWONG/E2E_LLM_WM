@@ -1,5 +1,5 @@
 
-# An End-to-End Model for Logits Based Large Language Models Watermarking [ICML'25]
+# [ICML'25] An End-to-End Model for Logits Based Large Language Models Watermarking
 
 [![arXiv](https://img.shields.io/badge/arXiv-2505.02344-b31b1b.svg)](https://arxiv.org/pdf/2505.02344)
 
