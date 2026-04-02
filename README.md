@@ -1,70 +1,104 @@
 
-# [ICML'25] An End-to-End Model for Logits Based Large Language Models Watermarking
+# E2E-LLM-Watermark
 
-[![arXiv](https://img.shields.io/badge/arXiv-2505.02344-b31b1b.svg)](https://arxiv.org/pdf/2505.02344)
+[![arXiv](https://img.shields.io/badge/arXiv-2505.02344-b31b1b.svg)](https://arxiv.org/abs/2505.02344)
+[![Venue](https://img.shields.io/badge/Venue-ICML%202025-0a66c2.svg)](https://openreview.net/forum?id=9sNiCqi2RD)
+[![License](https://img.shields.io/github/license/KahimWong/E2E-LLM-Watermark)](LICENSE)
+
+> **E2E-LLM-Watermark** is an end-to-end logits-based watermarking framework for LLM-generated text that jointly optimizes encoder and decoder to improve robustness-quality tradeoffs under text edits.
 
 ![Model Overview](./fig/model_overview.png)
- 
-## Description   
 
-The official source code of the paper "An End-to-End Model for Logits Based Large Language Models Watermarking". 
+---
 
-## Abstract   
+## ✨ Highlights
 
-Existing LLM watermarking methods, though effective on unaltered content, suffer significant performance drops when the text is modified and could introduce biases that degrade LLM performance in downstream tasks. These methods fail to achieve an optimal tradeoff between text quality and robustness, particularly due to the lack of end-to-end optimization of the encoder and decoder. In this paper, we introduce a novel end-to-end logits perturbation method for watermarking LLM-generated text. By jointly optimization, our approach achieves a better balance between quality and robustness. To address non-differentiable operations in the end-to-end training pipeline, we introduce an online prompting technique that leverages the on-the-fly LLM as a differentiable surrogate.
+- **End-to-end optimization** of watermark encoder and decoder.
+- **Logits perturbation watermarking** integrated into autoregressive generation.
+- **Online prompting strategy** to handle non-differentiable operations during training.
+- **Unified evaluation pipeline** for both detection robustness and text quality.
 
-## Environment Setup
+---
 
-**Our end-to-end model is trained with single A6000 48G.**
+## 📦 Repository Layout
 
-Install dependencies: python 3.9, pytorch 2.1, and other packages by
+```text
+E2E-LLM-Watermark/
+├── train/                  # training scripts (config, dataset, model, main)
+├── watermark/              # watermark methods (E2E implementation)
+├── evaluation/             # detection/quality pipelines and tools
+├── utils/                  # utility modules
+├── dataset/                # evaluation datasets (c4, human_eval, wmt16_de_en)
+├── ckpt/                   # released checkpoint (e.g., 35000.pth)
+├── fig/                    # figures used in README
+├── test.py                 # evaluation entry
+└── requirements.txt        # python dependencies
+```
+
+---
+
+## 🚀 Quick Start
+
+### 1) Environment
+
+Recommended setup:
+- Python 3.9
+- PyTorch 2.1
+
+Install dependencies:
+
 ```bash
 pip install -r requirements.txt
-```   
-
-## Training
-
-The training script is in directory ```train/```, the remain scripts outside this directory are used for evaluation. Run ```train/main.py``` to train our model. Before training, please config the training parameters in the ```train/config.py```.
-
-## Evaluation
-
-The ```test.py``` run the following function and the arguments are explained:
-
-```python
-def test(llm_name='opt-1.3b', assess_type='det', assess_name='no_attack', ds_len=-1):
-    """
-        Test the LLM with given assessment type and assessment name.
-
-        Parameters:
-            llm_name: The name of the LLM. 'opt-1.3b', 'Llama-2-7b-hf'
-            assess_type: The type of assessment, 'det' for detection, 'qlt' for quality.
-            assess_name: The name of the assessment.
-                For detection, 'no_attack', 'context_substitute', 'paraphrase_dipper'.
-                For quality, 'PPL', 'Log Diversity', 'BLEU', 'pass@1'.
-            ds_len: The length of the dataset. If -1, the whole dataset is used.
-    """
 ```
 
-The hyper-parameters of our model can be changed in the ```watermark/e2e/e2e.py``` file.
+### 2) Training
 
-```python
-class E2EConfig:
-    def __init__(self, transformers_config: TransformersConfig, ckpt) -> None:
-        # wm cfg
-        self.delta = 1.25
-        self.k = 20
-        self.win_size = 10
+Before training:
+1. Configure experiment paths and hyperparameters in `train/config.py` (especially `root`).
+2. Set your Hugging Face token in `train/main.py` (`login(token=...)`).
 
+Run:
+
+```bash
+cd train
+python main.py
 ```
 
-## Acknowledgements
+### 3) Evaluation
 
-The evaluation is performed based on the [MarkLLM](https://github.com/THU-BPM/MarkLLM), an tool for benchmarking LLM watermark methods.
-The end-to-end method is greatly inspired by the llm watermarking methods: [SIR](https://github.com/THU-BPM/Robust_Watermark), [TSW](https://github.com/mignonjia/TS_watermark), and [UPV](https://github.com/THU-BPM/unforgeable_watermark). Many thanks to these awesome works for their great contributions.
+Run evaluation from repository root:
 
-## Citation
+```bash
+python test.py --llm_name Llama-2-7b-hf --assess_type det --assess_name paraphrase_dipper --ds_len 100
+```
 
-If you find our project useful in your research, please cite it in your publications.
+Main arguments:
+- `llm_name`: `opt-1.3b` or `Llama-2-7b-hf`
+- `assess_type`: `det` (detection) or `qlt` (quality)
+- `assess_name`:
+  - detection: `no_attack`, `context_substitute`, `paraphrase_dipper`
+  - quality: `PPL`, `Log Diversity`, `BLEU`, `pass@1`
+- `ds_len`: number of samples (`-1` for full set)
+
+---
+
+## ⚙️ Key Configuration
+
+- **Training config** (`train/config.py`):
+  - optimization (`lr`, `batch_size`, `weight_decay`, `epochs`)
+  - watermark generation/training settings (`top_k_logits`, `wm_delta`, `context_win_size`)
+  - experiment outputs (`exp_dir`, `ckpt_dir`)
+
+- **Inference watermark config** (`watermark/e2e/e2e.py`, `E2EConfig`):
+  - `delta`: watermark perturbation strength
+  - `k`: top-k candidate size
+  - `win_size`: context window size
+
+---
+
+## 📚 Citation
+
+If this project helps your research, please cite:
 
 ```bibtex
 @inproceedings{
@@ -76,3 +110,10 @@ If you find our project useful in your research, please cite it in your publicat
     url={https://openreview.net/forum?id=9sNiCqi2RD}
 }
 ```
+
+---
+
+## 🙌 Acknowledgment
+
+Evaluation is based on [MarkLLM](https://github.com/THU-BPM/MarkLLM).  
+This method is inspired by prior LLM watermarking works: [SIR](https://github.com/THU-BPM/Robust_Watermark), [TSW](https://github.com/mignonjia/TS_watermark), and [UPV](https://github.com/THU-BPM/unforgeable_watermark).
