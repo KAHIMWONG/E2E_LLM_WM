@@ -3,7 +3,7 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2505.02344-b31b1b.svg)](https://arxiv.org/abs/2505.02344)
 [![Venue](https://img.shields.io/badge/Venue-ICML%202025-0a66c2.svg)](https://openreview.net/forum?id=9sNiCqi2RD)
-[![License](https://img.shields.io/github/license/KahimWong/E2E-LLM-Watermark)](LICENSE)
+[![License](https://img.shields.io/github/license/KahimWong/E2E-LLM-Watermark)](https://github.com/KahimWong/E2E-LLM-Watermark/blob/master/LICENSE)
 
 > **E2E-LLM-Watermark** is an end-to-end logits-based watermarking framework for LLM-generated text that jointly optimizes encoder and decoder to improve robustness-quality tradeoffs under text edits.
 
